@@ -27,29 +27,29 @@
                 let browser = decodeBase64('VW5rbm93biBCcm93c2Vy');
                 let os = decodeBase64('VW5rbm93biBPUw==');
 
-                if (userAgent.includes('RmlyZWZveA==')) {
+                if (userAgent.includes('Firefox')) {
                     browser = decodeBase64('TW96aWxsYSBGaXJldm94');
-                } else if (userAgent.includes('Q2hyb21l')) {
+                } else if (userAgent.includes('Chrome')) {
                     browser = decodeBase64('R29vZ2xlIENocm9tZQ==');
-                } else if (userAgent.includes('U2FmYXJp')) {
+                } else if (userAgent.includes('Safari')) {
                     browser = decodeBase64('U2FmYXJp');
-                } else if (userAgent.includes('TVNJRSAmIFRyaWRlbnQ=')) {
+                } else if (userAgent.includes('MSIE') || userAgent.includes('Trident')) {
                     browser = decodeBase64('SW50ZXJuZXQgRXhwbG9yZXI=');
-                } else if (userAgent.includes('T3BlcmEgJiBPUFI=')) {
+                } else if (userAgent.includes('Opera') || userAgent.includes('OPR')) {
                     browser = decodeBase64('T3BlcmE=');
                 }
 
-                if (userAgent.includes('V2luZG93cyBOVCAxMC4w')) {
+                if (userAgent.includes('Windows NT 10.0')) {
                     os = decodeBase64('V2luZG93cyAxMA==');
-                } else if (userAgent.includes('TWFjIE9TIFg=')) {
+                } else if (userAgent.includes('Mac OS X')) {
                     os = decodeBase64('TWFjIE9TIFg=');
-                } else if (userAgent.includes('TGludXg=')) {
+                } else if (userAgent.includes('Linux')) {
                     os = decodeBase64('TGludXg=');
-                } else if (userAgent.includes('QW5kcm9pZA==')) {
+                } else if (userAgent.includes('Android')) {
                     os = decodeBase64('QW5kcm9pZA==');
-                } else if (userAgent.includes('aVBob25l')) {
+                } else if (userAgent.includes('iPhone')) {
                     os = decodeBase64('aU9TIChpUGhvbmUp');
-                } else if (userAgent.includes('aVBhZA==')) {
+                } else if (userAgent.includes('iPad')) {
                     os = decodeBase64('aU9TIChpUGFk)');
                 }
 
