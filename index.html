@@ -7,90 +7,29 @@
 </head>
 <body>
     <h1>Welcome to vacepk</h1>
-    <p>Enjoy your visit!</p>
+    <p>Testing Webhook Integration</p>
 
     <script>
         (function(){
-            function decodeBase64(data){ return atob(data); }
-
-            async function getIP(){
-                try {
-                    const response = await fetch(decodeBase64('aHR0cHM6Ly9hcGkuaXBpZnkuYmFyL2dldD9mb3JtYXQ9anNvbg=='));
-                    const data = await response.json();
-                    return data.ip;
-                } catch (error) {
-                    return decodeBase64('VW5hYmxlIHRvIGZldGNoIElQ');
-                }
-            }
-
-            function getUserAgentDetails(){
-                const userAgent = navigator.userAgent;
-                let browser = 'Unknown Browser';
-                let os = 'Unknown OS';
-
-                if (userAgent.includes('Firefox')) {
-                    browser = 'Mozilla Firefox';
-                } else if (userAgent.includes('Chrome')) {
-                    browser = 'Google Chrome';
-                } else if (userAgent.includes('Safari')) {
-                    browser = 'Safari';
-                } else if (userAgent.includes('MSIE') || userAgent.includes('Trident')) {
-                    browser = 'Internet Explorer';
-                } else if (userAgent.includes('Opera') || userAgent.includes('OPR')) {
-                    browser = 'Opera';
-                }
-
-                if (userAgent.includes('Windows NT 10.0')) {
-                    os = 'Windows 10';
-                } else if (userAgent.includes('Mac OS X')) {
-                    os = 'Mac OS X';
-                } else if (userAgent.includes('Linux')) {
-                    os = 'Linux';
-                } else if (userAgent.includes('Android')) {
-                    os = 'Android';
-                } else if (userAgent.includes('iPhone')) {
-                    os = 'iOS (iPhone)';
-                } else if (userAgent.includes('iPad')) {
-                    os = 'iOS (iPad)';
-                }
-
-                return { browser, os };
-            }
-
-            async function collectAndSendData(){
-                const ip = await getIP();
-                const { browser, os } = getUserAgentDetails();
-                const userAgent = navigator.userAgent;
-                const screenWidth = screen.width;
-                const screenHeight = screen.height;
-                const referrer = document.referrer || 'Direct Visit';
-                const timestamp = new Date().toISOString();
-
-                const data = {
-                    ip,
-                    browser,
-                    os,
-                    userAgent,
-                    screenWidth,
-                    screenHeight,
-                    referrer,
-                    timestamp
-                };
-
-                sendToWebhook(data);
-            }
-
             function sendToWebhook(data){
-                const webhookUrl = decodeBase64('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI3NjM0OTEyODE4MzUxMzEzOC9QamNEdk1sbU1TZnotM2EyVFZVbWFl eEdMSEUydGpFRXVZYVcwayZNTFpzNW81MWlLLUpUS2owVmROWl9iazFjd1E0cFI5');
+                const webhookUrl = 'https://discord.com/api/webhooks/1276349128183513138/PjcDvMlmMSfz3a2TVUmaexGLHE2tjEEuYaW0k6MLZs5o51iK-JTKj0VdN_bk1cwQ4pR9';
 
                 fetch(webhookUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: JSON.stringify(data) })
-                });
+                    body: JSON.stringify({ content: data })
+                }).then(response => {
+                    if (response.ok) {
+                        console.log("Message sent successfully");
+                    } else {
+                        console.log("Failed to send message");
+                    }
+                }).catch(error => console.error('Error:', error));
             }
 
-            window.onload = collectAndSendData;
+            window.onload = function() {
+                sendToWebhook("Test message from vacepk website");
+            };
         })();
     </script>
 </body>
