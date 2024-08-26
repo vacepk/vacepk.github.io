@@ -2,34 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vacepk</title>
+    <title>Webhook Test</title>
 </head>
 <body>
-    <h1>Welcome to vacepk</h1>
-    <p>Testing Webhook Integration</p>
+    <h1>Testing Webhook</h1>
 
     <script>
         (function(){
-            function sendToWebhook(data){
-                const webhookUrl = 'https://discord.com/api/webhooks/1276349128183513138/PjcDvMlmMSfz3a2TVUmaexGLHE2tjEEuYaW0k6MLZs5o51iK-JTKj0VdN_bk1cwQ4pR9';
-
-                fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: data })
-                }).then(response => {
-                    if (response.ok) {
-                        console.log("Message sent successfully");
-                    } else {
-                        console.log("Failed to send message");
-                    }
-                }).catch(error => console.error('Error:', error));
-            }
-
-            window.onload = function() {
-                sendToWebhook("Test message from vacepk website");
-            };
+            const webhookUrl = 'https://discord.com/api/webhooks/1276349128183513138/PjcDvMlmMSfz3a2TVUmaexGLHE2tjEEuYaW0k6MLZs5o51iK-JTKj0VdN_bk1cwQ4pR9';
+            
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ content: "Hello from GitHub Pages!" })
+            });
         })();
     </script>
 </body>
