@@ -12,34 +12,107 @@
             height: 100vh;
             background: #111;
             overflow: hidden;
+            margin: 0;
         }
+
+        .blur-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        .blur-container h1 {
+            font-size: 3rem;
+            cursor: pointer;
+            color: white;
+            font-weight: normal;
+        }
+
+        .content {
+            display: none;
+            z-index: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
         .x12 {
             font-size: 5rem;
             font-weight: bold;
             font-family: Arial, sans-serif;
             display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
         .x12 span {
             animation: y98 1.5s linear infinite;
+            transition: transform 0.3s ease;
         }
+
+        .x12 span:hover {
+            transform: scale(1.2);
+        }
+
         @keyframes y98 {
             0% { color: red; }
-            16% { color: orange; }
-            32% { color: yellow; }
-            48% { color: green; }
-            64% { color: blue; }
-            80% { color: indigo; }
-            100% { color: violet; }
+            50% { color: blue; }
+            100% { color: red; }
+        }
+
+        audio {
+            display: none;
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="x12">
-        <span style="animation-delay: 0s">s</span>
-        <span style="animation-delay: 0.2s">h</span>
-        <span style="animation-delay: 0.4s">u</span>
-        <span style="animation-delay: 0.6s">s</span>
-        <span style="animation-delay: 0.8s">h</span>
+
+    <div class="blur-container" id="blur-container">
+        <h1 id="click-to-enter">click to enter.</h1>
     </div>
+
+    <div class="content" id="content">
+        <img src="C:/Users/kaspr/Desktop/val/tplink/johnboi.png" alt="Your Image">
+        <div class="x12">
+            <span style="animation-delay: 0s">s</span>
+            <span style="animation-delay: 0.2s">h</span>
+            <span style="animation-delay: 0.4s">u</span>
+            <span style="animation-delay: 0.6s">s</span>
+            <span style="animation-delay: 0.8s">h</span>
+        </div>
+    </div>
+
+    <audio id="audio" src="C:/Users/kaspr/Desktop/val/tplink/Marky_B_-_Boyo_Antics.mp3"></audio>
+
+    <script>
+        const clickToEnter = document.getElementById('click-to-enter');
+        const blurContainer = document.getElementById('blur-container');
+        const content = document.getElementById('content');
+        const audio = document.getElementById('audio');
+
+        clickToEnter.addEventListener('click', () => {
+            blurContainer.style.display = 'none';
+            content.style.display = 'block';
+            audio.play();
+        });
+    </script>
+
 </body>
 </html>
