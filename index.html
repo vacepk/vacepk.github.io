@@ -1,118 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shush</title>
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #111;
-            overflow: hidden;
-            margin: 0;
-        }
-
-        .blur-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1;
-        }
-
-        .blur-container h1 {
-            font-size: 3rem;
-            cursor: pointer;
-            color: white;
-            font-weight: normal;
-        }
-
-        .content {
-            display: none;
-            z-index: 0;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .x12 {
-            font-size: 5rem;
-            font-weight: bold;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .x12 span {
-            animation: y98 1.5s linear infinite;
-            transition: transform 0.3s ease;
-        }
-
-        .x12 span:hover {
-            transform: scale(1.2);
-        }
-
-        @keyframes y98 {
-            0% { color: red; }
-            50% { color: blue; }
-            100% { color: red; }
-        }
-
-        audio {
-            display: none;
-        }
-
-        .content img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Blackjack Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #064420;
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      padding: 20px;
+    }
+    #game {
+      max-width: 600px;
+      margin: auto;
+      background: #116530;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px black;
+    }
+    .hand {
+      margin: 20px;
+      padding: 10px;
+      background: #1a7431;
+      border-radius: 8px;
+    }
+    .cards {
+      font-size: 24px;
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #ffd700;
+      color: black;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ffbf00;
+    }
+    #result {
+      font-size: 22px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-
-    <div class="blur-container" id="blur-container">
-        <h1 id="click-to-enter">click to enter.</h1>
+  <h1>Blackjack vs Bot</h1>
+  <div id="game">
+    <div class="hand">
+      <h2>Your Hand</h2>
+      <div id="player-cards" class="cards"></div>
+      <div id="player-score"></div>
     </div>
-
-    <div class="content" id="content">
-        <img src="johnboi.png" alt="Your Image">
-        <div class="x12">
-            <span style="animation-delay: 0s">s</span>
-            <span style="animation-delay: 0.2s">h</span>
-            <span style="animation-delay: 0.4s">u</span>
-            <span style="animation-delay: 0.6s">s</span>
-            <span style="animation-delay: 0.8s">h</span>
-        </div>
+    <div class="hand">
+      <h2>Bot's Hand</h2>
+      <div id="dealer-cards" class="cards"></div>
+      <div id="dealer-score"></div>
     </div>
+    <button onclick="hit()">Hit</button>
+    <button onclick="stand()">Stand</button>
+    <button onclick="restart()">Restart</button>
+    <div id="result"></div>
+  </div>
 
-    <audio id="audio" src="Young Igi Bestia.mp3"></audio>
+  <script>
+    const suits = ['♠', '♥', '♦', '♣'];
+    const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
-    <script>
-        const clickToEnter = document.getElementById('click-to-enter');
-        const blurContainer = document.getElementById('blur-container');
-        const content = document.getElementById('content');
-        const audio = document.getElementById('audio');
+    let deck, playerHand, dealerHand, gameOver;
 
-        clickToEnter.addEventListener('click', () => {
-            blurContainer.style.display = 'none';
-            content.style.display = 'block';
-            audio.play();
-        });
-    </script>
+    function createDeck() {
+      let newDeck = [];
+      for (let s of suits) {
+        for (let v of values) {
+          newDeck.push({value: v, suit: s});
+        }
+      }
+      return shuffle(newDeck);
+    }
 
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function startGame() {
+      deck = createDeck();
+      playerHand = [deck.pop(), deck.pop()];
+      dealerHand = [deck.pop(), deck.pop()];
+      gameOver = false;
+      updateDisplay();
+    }
+
+    function getScore(hand) {
+      let score = 0;
+      let aces = 0;
+      for (let card of hand) {
+        if (['J','Q','K'].includes(card.value)) {
+          score += 10;
+        } else if (card.value === 'A') {
+          score += 11;
+          aces++;
+        } else {
+          score += parseInt(card.value);
+        }
+      }
+      while (score > 21 && aces > 0) {
+        score -= 10;
+        aces--;
+      }
+      return score;
+    }
+
+    function hit() {
+      if (gameOver) return;
+      playerHand.push(deck.pop());
+      if (getScore(playerHand) > 21) {
+        endGame();
+      }
+      updateDisplay();
+    }
+
+    function stand() {
+      if (gameOver) return;
+      while (getScore(dealerHand) < 17) {
+        dealerHand.push(deck.pop());
+      }
+      endGame();
+      updateDisplay();
+    }
+
+    function endGame() {
+      gameOver = true;
+      let playerScore = getScore(playerHand);
+      let dealerScore = getScore(dealerHand);
+      if (playerScore > 21) {
+        document.getElementById('result').textContent = "You Bust! Dealer Wins!";
+      } else if (dealerScore > 21) {
+        document.getElementById('result').textContent = "Dealer Busts! You Win!";
+      } else if (playerScore > dealerScore) {
+        document.getElementById('result').textContent = "You Win!";
+      } else if (playerScore < dealerScore) {
+        document.getElementById('result').textContent = "Dealer Wins!";
+      } else {
+        document.getElementById('result').textContent = "It's a Tie!";
+      }
+    }
+
+    function restart() {
+      document.getElementById('result').textContent = "";
+      startGame();
+    }
+
+    function updateDisplay() {
+      document.getElementById('player-cards').textContent = playerHand.map(c => c.value + c.suit).join(" ");
+      document.getElementById('player-score').textContent = "Score: " + getScore(playerHand);
+
+      document.getElementById('dealer-cards').textContent = dealerHand.map(c => c.value + c.suit).join(" ");
+      document.getElementById('dealer-score').textContent = "Score: " + getScore(dealerHand);
+    }
+
+    startGame();
+  </script>
 </body>
 </html>
