@@ -5,70 +5,106 @@
   <title>Blackjack Game</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #064420;
-      color: white;
-      text-align: center;
       margin: 0;
-      padding: 0;
-    }
-    h1 {
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0b3d0b, #145214);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
     #game {
-      max-width: 600px;
-      margin: auto;
-      background: #116530;
+      background: #1f3b1f;
+      border-radius: 12px;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px black;
+      width: 700px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 10px;
     }
     .hand {
       margin: 20px;
-      padding: 10px;
-      background: #1a7431;
+      padding: 15px;
+      background: #295229;
       border-radius: 8px;
     }
     .cards {
-      font-size: 24px;
+      font-size: 32px;
       margin: 10px 0;
+      letter-spacing: 8px;
+    }
+    .score {
+      font-size: 18px;
+      margin-top: 5px;
     }
     button {
-      padding: 10px 20px;
-      margin: 10px;
+      padding: 12px 24px;
+      margin: 8px;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       background: #ffd700;
-      color: black;
+      color: #000;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.2s;
     }
     button:hover {
       background: #ffbf00;
     }
+    #controls {
+      margin-top: 20px;
+    }
     #result {
       font-size: 22px;
-      margin-top: 20px;
       font-weight: bold;
+      margin-top: 20px;
+    }
+    #money {
+      margin-top: 15px;
+      font-size: 20px;
+    }
+    #betting {
+      margin-top: 15px;
+    }
+    input[type="number"] {
+      padding: 6px;
+      width: 80px;
+      border-radius: 4px;
+      border: none;
+      font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <h1>Blackjack vs Bot</h1>
   <div id="game">
+    <h1>Blackjack vs Dealer</h1>
+    <div id="money">Balance: $1000</div>
+    <div id="betting">
+      <label for="bet">Bet: $</label>
+      <input type="number" id="bet" value="100" min="10" step="10">
+      <button onclick="startGame()">Start Game</button>
+    </div>
+
     <div class="hand">
       <h2>Your Hand</h2>
       <div id="player-cards" class="cards"></div>
-      <div id="player-score"></div>
+      <div id="player-score" class="score"></div>
     </div>
     <div class="hand">
-      <h2>Bot's Hand</h2>
+      <h2>Dealer's Hand</h2>
       <div id="dealer-cards" class="cards"></div>
-      <div id="dealer-score"></div>
+      <div id="dealer-score" class="score"></div>
     </div>
-    <button onclick="hit()">Hit</button>
-    <button onclick="stand()">Stand</button>
-    <button onclick="restart()">Restart</button>
+
+    <div id="controls">
+      <button onclick="hit()" id="hitBtn" disabled>Hit</button>
+      <button onclick="stand()" id="standBtn" disabled>Stand</button>
+      <button onclick="restart()" id="restartBtn" disabled>Restart</button>
+    </div>
     <div id="result"></div>
   </div>
 
@@ -76,7 +112,8 @@
     const suits = ['♠', '♥', '♦', '♣'];
     const values = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
 
-    let deck, playerHand, dealerHand, gameOver;
+    let deck, playerHand, dealerHand;
+    let gameOver, balance = 1000, currentBet = 0, gameStarted = false;
 
     function createDeck() {
       let newDeck = [];
@@ -97,11 +134,26 @@
     }
 
     function startGame() {
+      let betInput = document.getElementById("bet").value;
+      currentBet = parseInt(betInput);
+      if (isNaN(currentBet) || currentBet <= 0 || currentBet > balance) {
+        alert("Invalid bet amount!");
+        return;
+      }
+      balance -= currentBet;
+      updateBalance();
+
       deck = createDeck();
       playerHand = [deck.pop(), deck.pop()];
       dealerHand = [deck.pop(), deck.pop()];
       gameOver = false;
-      updateDisplay();
+      gameStarted = true;
+
+      document.getElementById("hitBtn").disabled = false;
+      document.getElementById("standBtn").disabled = false;
+      document.getElementById("restartBtn").disabled = true;
+      document.getElementById("result").textContent = "";
+      updateDisplay(true);
     }
 
     function getScore(hand) {
@@ -125,54 +177,76 @@
     }
 
     function hit() {
-      if (gameOver) return;
+      if (gameOver || !gameStarted) return;
       playerHand.push(deck.pop());
       if (getScore(playerHand) > 21) {
         endGame();
       }
-      updateDisplay();
+      updateDisplay(true);
     }
 
     function stand() {
-      if (gameOver) return;
+      if (gameOver || !gameStarted) return;
       while (getScore(dealerHand) < 17) {
         dealerHand.push(deck.pop());
       }
       endGame();
-      updateDisplay();
+      updateDisplay(false);
     }
 
     function endGame() {
       gameOver = true;
       let playerScore = getScore(playerHand);
       let dealerScore = getScore(dealerHand);
+      let result = "";
+
       if (playerScore > 21) {
-        document.getElementById('result').textContent = "You Bust! Dealer Wins!";
+        result = "You Bust! Dealer Wins!";
       } else if (dealerScore > 21) {
-        document.getElementById('result').textContent = "Dealer Busts! You Win!";
+        result = "Dealer Busts! You Win!";
+        balance += currentBet * 2;
       } else if (playerScore > dealerScore) {
-        document.getElementById('result').textContent = "You Win!";
+        result = "You Win!";
+        balance += currentBet * 2;
       } else if (playerScore < dealerScore) {
-        document.getElementById('result').textContent = "Dealer Wins!";
+        result = "Dealer Wins!";
       } else {
-        document.getElementById('result').textContent = "It's a Tie!";
+        result = "It's a Tie!";
+        balance += currentBet;
       }
+
+      updateBalance();
+      document.getElementById("result").textContent = result;
+      document.getElementById("hitBtn").disabled = true;
+      document.getElementById("standBtn").disabled = true;
+      document.getElementById("restartBtn").disabled = false;
     }
 
     function restart() {
-      document.getElementById('result').textContent = "";
-      startGame();
+      document.getElementById("player-cards").textContent = "";
+      document.getElementById("dealer-cards").textContent = "";
+      document.getElementById("player-score").textContent = "";
+      document.getElementById("dealer-score").textContent = "";
+      document.getElementById("result").textContent = "";
+      gameStarted = false;
     }
 
-    function updateDisplay() {
-      document.getElementById('player-cards').textContent = playerHand.map(c => c.value + c.suit).join(" ");
-      document.getElementById('player-score').textContent = "Score: " + getScore(playerHand);
-
-      document.getElementById('dealer-cards').textContent = dealerHand.map(c => c.value + c.suit).join(" ");
-      document.getElementById('dealer-score').textContent = "Score: " + getScore(dealerHand);
+    function updateBalance() {
+      document.getElementById("money").textContent = "Balance: $" + balance;
     }
 
-    startGame();
+    function updateDisplay(hideDealer) {
+      document.getElementById("player-cards").textContent = playerHand.map(c => c.value + c.suit).join(" ");
+      document.getElementById("player-score").textContent = "Score: " + getScore(playerHand);
+
+      if (hideDealer) {
+        document.getElementById("dealer-cards").textContent = dealerHand[0].value + dealerHand[0].suit + " [Hidden]";
+        document.getElementById("dealer-score").textContent = "Score: ?";
+      } else {
+        document.getElementById("dealer-cards").textContent = dealerHand.map(c => c.value + c.suit).join(" ");
+        document.getElementById("dealer-score").textContent = "Score: " + getScore(dealerHand);
+      }
+    }
   </script>
 </body>
 </html>
